@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <title>Game of Life Tutorial | Spicy Yoghurt</title>
+    <meta name="description" content="Game of Life tutorial by Spicy Yoghurt" />
+    <meta name="author" content="Spicy Yoghurt" />
+  </head>
+
+  <body>
+    <style>
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #fefefe;
+      }
+
+      canvas {
+        border: none;
+        border-radius: 1rem;
+        width: 800px;
+        height: 800px;
+        padding: 64px;
+        background-color: #9b5de5;
+      }
+    </style>
+
+    <canvas id="canvas" width="800" height="800">
+      Your browser does not support the HTML5 canvas tag.
+    </canvas>
+    <script>
+      const createDistribution = (array, weights, size) => {
+        const distribution = [];
+        const sum = weights.reduce((a, b) => a + b);
+        for (let i = 0; i < array.length; ++i) {
+          const count = (weights[i] / sum) * size;
+          for (let j = 0; j < count; ++j) {
+            distribution.push(i);
+          }
+        }
+        return distribution;
+      };
+
+      const randomIndex = (distribution) => {
+        const index = Math.floor(distribution.length * Math.random());
+        return distribution[index];
+      };
+
+      const generateSetup = () => {
+        // initial values
+        let setup = {
+          delay: 15.6,
+          canvasSize: 800,
+          cellAliveColor: ["#01f5d4", "#f15bb5", "#00bbf9", "#fee440"],
+          cellDeadColor: "#9b5de5",
+        };
+
+        // get random size
+        const sizes = [
+          { name: "sm", cellSize: 10 },
+          { name: "md", cellSize: 20 },
+          { name: "lg", cellSize: 25 },
+          { name: "xl", cellSize: 50 },
+        ];
+        const sizeWeights = [0.5, 0.25, 0.125, 0.125];
+        const sizeDistribution = createDistribution(sizes, sizeWeights, 10);
+        setup.cellSize = sizes[randomIndex(sizeDistribution)].cellSize;
+
+        // get random color palette
+        const palettes = [
+          {
+            name: "Flashy",
+            cellAliveColor: ["#01f5d4", "#f15bb5", "#00bbf9", "#fee440"],
+            cellDeadColor: "#9b5de5",
+          },
+          {},
+          {},
+        ];
+
+        return setup;
+      };
+
+      const setup = generateSetup();
+      console.log(setup);
+
+      class Cell {
+        static width = setup.cellSize;
+        static height = setup.cellSize;
+
+        constructor(context, gridX, gridY) {
+          this.context = context;
+
+          // Store the position of this cell in the grid
+          this.gridX = gridX;
+          this.gridY = gridY;
+
+          // Make random cells alive
+          this.alive = Math.random() > 0.5;
+
+          // Set alive color
+          this.aliveColor =
+            setup.cellAliveColor[
+              ~~(Math.random() * setup.cellAliveColor.length)
+            ];
+        }
+
+        draw() {
+          // Draw a simple square
+          this.context.fillStyle = this.alive
+            ? this.aliveColor
+            : setup.cellDeadColor;
+          this.context.fillRect(
+            this.gridX * Cell.width,
+            this.gridY * Cell.height,
+            Cell.width,
+            Cell.height
+          );
+        }
+      }
+
+      class GameWorld {
+        static numColumns = setup.canvasSize / setup.cellSize;
+        static numRows = setup.canvasSize / setup.cellSize;
+
+        constructor(canvasId) {
+          this.canvas = document.getElementById(canvasId);
+          this.context = this.canvas.getContext("2d");
+          this.gameObjects = [];
+
+          this.createGrid();
+
+          // Request an animation frame for the first time
+          // The gameLoop() function will be called as a callback of this request
+          window.requestAnimationFrame(() => this.gameLoop());
+        }
+
+        createGrid() {
+          for (let y = 0; y < GameWorld.numRows; y++) {
+            for (let x = 0; x < GameWorld.numColumns; x++) {
+              this.gameObjects.push(new Cell(this.context, x, y));
+            }
+          }
+        }
+
+        isAlive(x, y) {
+          if (
+            x < 0 ||
+            x >= GameWorld.numColumns ||
+            y < 0 ||
+            y >= GameWorld.numRows
+          ) {
+            return false;
+          }
+
+          return this.gameObjects[this.gridToIndex(x, y)].alive ? 1 : 0;
+        }
+
+        gridToIndex(x, y) {
+          return x + y * GameWorld.numColumns;
+        }
+
+        checkSurrounding() {
+          // Loop over all cells
+          for (let x = 0; x < GameWorld.numColumns; x++) {
+            for (let y = 0; y < GameWorld.numRows; y++) {
+              // Count the nearby population
+              let numAlive =
+                this.isAlive(x - 1, y - 1) +
+                this.isAlive(x, y - 1) +
+                this.isAlive(x + 1, y - 1) +
+                this.isAlive(x - 1, y) +
+                this.isAlive(x + 1, y) +
+                this.isAlive(x - 1, y + 1) +
+                this.isAlive(x, y + 1) +
+                this.isAlive(x + 1, y + 1);
+              let centerIndex = this.gridToIndex(x, y);
+
+              if (numAlive == 2) {
+                // Do nothing
+                this.gameObjects[centerIndex].nextAlive =
+                  this.gameObjects[centerIndex].alive;
+              } else if (numAlive == 3) {
+                // Make alive
+                this.gameObjects[centerIndex].nextAlive = true;
+              } else {
+                // Make dead
+                this.gameObjects[centerIndex].nextAlive = false;
+              }
+            }
+          }
+
+          // Apply the new state to the cells
+          for (let i = 0; i < this.gameObjects.length; i++) {
+            this.gameObjects[i].alive = this.gameObjects[i].nextAlive;
+          }
+        }
+
+        gameLoop() {
+          // Check the surrounding of each cell
+          this.checkSurrounding();
+
+          // Clear the screen
+          this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+          // Draw all the gameobjects
+          for (let i = 0; i < this.gameObjects.length; i++) {
+            this.gameObjects[i].draw();
+          }
+
+          // The loop function has reached it's end, keep requesting new frames
+          setTimeout(() => {
+            window.requestAnimationFrame(() => this.gameLoop());
+          }, setup.delay);
+        }
+      }
+
+      window.onload = () => {
+        // The page has loaded, start the game
+        let gameWorld = new GameWorld("canvas");
+      };
+    </script>
+  </body>
+</html>
