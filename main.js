@@ -48,18 +48,28 @@ const generateSetup = () => {
       cellDeadColor: "#dc77d2",
     },
     {
-      name: "Black & White",
-      cellAliveColor: ["#111"],
-      cellDeadColor: "#FEFEFE",
-    },
-    {
       name: "Greytones",
       cellAliveColor: ["#111", "#222", "#444", "#666", "#888", "#aaa", "#ccc", "#eee"],
       cellDeadColor: "#FEFEFE",
     },
+    {
+      name: "Lava",
+      cellAliveColor: ["#d62827", "#f77f00", "#fcbf48", "#ebe2b7"],
+      cellDeadColor: "#003049",
+    },
+    {
+      name: "Mystic Violet",
+      cellAliveColor: ["#03052e", "#22017c", "#0d00a4"],
+      cellDeadColor: "#02010a",
+    },
+    {
+      name: "Tango Matisse",
+      cellAliveColor: ["#fec600", "#74bfb8", "#3ca5d9", "#2364aa"],
+      cellDeadColor: "#ea7316",
+    },
   ];
-  const paletteWeights = [0.25, 0.25, 0.25, 0.25];
-  const paletteDistribution = createDistribution(palettes, paletteWeights, 10);
+  const paletteWeights = [0.2, 0.2, 0.2, 0.2, 0.2, 0.2];
+  const paletteDistribution = createDistribution(palettes, paletteWeights, 12);
   const paletteRandomIndex = randomIndex(paletteDistribution, randomFloat());
   setup.paletteName = palettes[paletteRandomIndex].name;
   setup.cellAliveColor = palettes[paletteRandomIndex].cellAliveColor;
