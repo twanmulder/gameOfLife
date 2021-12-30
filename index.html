@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <title>Game of Life Tutorial | Spicy Yoghurt</title>
+    <meta name="description" content="Game of Life tutorial by Spicy Yoghurt" />
+    <meta name="author" content="Spicy Yoghurt" />
+  </head>
+
+  <body>
+    <style>
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #fefefe;
+      }
+
+      canvas {
+        border: none;
+        border-radius: 1rem;
+        width: 400px;
+        height: 400px;
+        padding: 64px;
+        box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+          rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+      }
+
+      pre {
+        margin-left: 2rem;
+      }
+    </style>
+
+    <canvas id="canvas" width="400" height="400"> Your browser does not support the HTML5 canvas tag. </canvas>
+    <pre>
+      <code id="setup">
+      </code>
+    </pre>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
