@@ -117,6 +117,7 @@ class GameWorld {
   constructor(canvasId) {
     this.canvas = document.getElementById(canvasId);
     this.canvas.style.backgroundColor = setup.cellDeadColor;
+    this.canvas.style.boxShadow = `0 25px 50px -12px ${setup.cellDeadColor}, 0 25px 50px -12px rgb(0 0 0 / 0.25)`;
     this.context = this.canvas.getContext("2d");
     this.gameObjects = [];
 
