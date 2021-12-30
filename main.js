@@ -1,7 +1,13 @@
 import { xmur3, mulberry32, createDistribution, randomIndex } from "./util.js";
 
+let initSeed = Math.floor(Math.random() * 100);
+const params = new URLSearchParams(window.location.search);
+if (params.has("seed")) {
+  initSeed = params.get("seed");
+}
+
 const initSetup = {
-  seedInput: "1",
+  seedInput: initSeed.toString(),
   canvasSize: 400,
 };
 
