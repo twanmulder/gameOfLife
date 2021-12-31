@@ -21,26 +21,68 @@
         justify-content: center;
         align-items: center;
         background-color: #fefefe;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
+          "Helvetica Neue", sans-serif;
       }
 
       canvas {
         border: none;
         border-radius: 1rem;
+        background-color: #fefefe;
         box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
           rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
       }
 
-      pre {
+      section {
+        box-sizing: border-box;
         width: 400px;
-        margin-left: 2rem;
+        height: 600px;
+        padding: 2rem 2rem 2rem 3rem;
+        border-radius: 0 1rem 1rem 0;
+        border: 1px solid #ccc;
+        margin-left: -1rem;
+      }
+
+      input[type="text"] {
+        background-color: #eee;
+        appearance: none;
+        border: 2px solid #eee;
+        border-radius: 0.25rem 0 0 0.25rem;
+        padding: 0.25rem 0.5rem;
+        font-size: 1rem;
+      }
+
+      input[type="text"]:focus {
+        outline: none;
+        background-color: #fff;
+      }
+
+      input[type="button"] {
+        appearance: none;
+        border-radius: 0 0.25rem 0.25rem 0;
+        border: 2px solid #ddd;
+        background-color: #ddd;
+        color: #aaa;
+        font-size: 1rem;
+        padding: 0.25rem 0.5rem;
+      }
+
+      input[type="button"]:hover {
+        background-color: #eee;
+        border-color: #eee;
+        cursor: pointer;
       }
     </style>
 
     <canvas id="canvas" width="600" height="600"> Your browser does not support the HTML5 canvas tag. </canvas>
-    <pre>
+    <section>
+      <p>Seed: <input type="text" name="seed input" id="seed" /><input type="button" value="random" id="random" /></p>
+      <pre>
       <code id="setup">
       </code>
     </pre>
+    </section>
+
     <script type="module" src="./main.js"></script>
   </body>
 </html>

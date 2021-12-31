@@ -111,7 +111,13 @@ const generateSetup = () => {
 };
 
 const setup = generateSetup();
+document.getElementById("seed").value = setup.seedInput;
 document.getElementById("setup").innerHTML = JSON.stringify(setup, null, 4);
+
+// add handler for random button
+document.getElementById("random").onclick = () => {
+  window.location.href = window.location.href.split("?")[0];
+};
 
 class Cell {
   static width = setup.cellSize;
