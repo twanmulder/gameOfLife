@@ -177,7 +177,7 @@ traits.forEach((trait) => {
 
 // add handler for random button
 document.getElementById("random").onclick = () => {
-  window.location.href = window.location.href.split("?")[0];
+  window.location.href = window.location.href.split("?")[0] + "?seed=" + Math.floor(Math.random() * 1000);
 };
 
 class Cell {
