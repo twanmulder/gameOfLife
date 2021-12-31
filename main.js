@@ -32,7 +32,7 @@ const generateSetup = () => {
   ];
   const sizeWeights = [0.5, 0.25, 0.125, 0.125];
   const sizeDistribution = createDistribution(sizes, sizeWeights, 10);
-  const sizeRandomIndex = randomIndex(sizeDistribution, randomFloat());
+  const sizeRandomIndex = randomIndex(sizeDistribution, setup.randomFloat);
   setup.sizeName = sizes[sizeRandomIndex].name;
   setup.cellSize = sizes[sizeRandomIndex].cellSize;
 
@@ -76,7 +76,7 @@ const generateSetup = () => {
   ];
   const paletteWeights = [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2];
   const paletteDistribution = createDistribution(palettes, paletteWeights, 14);
-  const paletteRandomIndex = randomIndex(paletteDistribution, randomFloat());
+  const paletteRandomIndex = randomIndex(paletteDistribution, setup.randomFloat);
   setup.paletteName = palettes[paletteRandomIndex].name;
   setup.cellAliveColor = palettes[paletteRandomIndex].cellAliveColor;
   setup.cellDeadColor = palettes[paletteRandomIndex].cellDeadColor;
@@ -89,7 +89,7 @@ const generateSetup = () => {
   ];
   const delayWeights = [0.333, 0.333, 0.333];
   const delayDistribution = createDistribution(delays, delayWeights, 10);
-  const delayRandomIndex = randomIndex(delayDistribution, randomFloat());
+  const delayRandomIndex = randomIndex(delayDistribution, setup.randomFloat);
   setup.delayName = delays[delayRandomIndex].name;
   setup.delay = delays[delayRandomIndex].delay;
 
@@ -97,14 +97,14 @@ const generateSetup = () => {
   const shadows = [false, true];
   const shadowWeights = [0.75, 0.25];
   const shadowDistribution = createDistribution(shadows, shadowWeights, 10);
-  const shadowRandomIndex = randomIndex(shadowDistribution, randomFloat());
+  const shadowRandomIndex = randomIndex(shadowDistribution, setup.randomFloat);
   setup.shadow = shadows[shadowRandomIndex];
 
   // get if it should be circles or squares
   const shapes = ["circle", "overlapping-circle", "square"];
   const shapeWeights = [0.25, 0.25, 0.5];
   const shapeDistribution = createDistribution(shapes, shapeWeights, 10);
-  const shapeRandomIndex = randomIndex(shapeDistribution, randomFloat());
+  const shapeRandomIndex = randomIndex(shapeDistribution, setup.randomFloat);
   setup.shape = shapes[shapeRandomIndex];
 
   return setup;
