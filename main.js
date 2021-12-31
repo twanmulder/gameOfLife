@@ -31,7 +31,7 @@ const generateSetup = () => {
     { name: "Extra Large", cellSize: 40, probability: 0.4 },
   ];
   const sizeDistribution = createDistribution(sizes);
-  const sizeRandomIndex = randomIndex(sizeDistribution, setup.randomFloat);
+  const sizeRandomIndex = randomIndex(sizeDistribution, randomFloat());
   setup.sizeName = sizes[sizeRandomIndex].name;
   setup.cellSize = sizes[sizeRandomIndex].cellSize;
   setup.sizeProbability = sizes[sizeRandomIndex].probability;
@@ -88,7 +88,7 @@ const generateSetup = () => {
     },
   ];
   const paletteDistribution = createDistribution(palettes);
-  const paletteRandomIndex = randomIndex(paletteDistribution, setup.randomFloat);
+  const paletteRandomIndex = randomIndex(paletteDistribution, randomFloat());
   setup.paletteName = palettes[paletteRandomIndex].name;
   setup.paletteProbability = palettes[paletteRandomIndex].probability;
   setup.cellAliveColor = palettes[paletteRandomIndex].cellAliveColor;
@@ -102,7 +102,7 @@ const generateSetup = () => {
     { name: "Turbo", delay: 30, probability: 0.1 },
   ];
   const delayDistribution = createDistribution(delays);
-  const delayRandomIndex = randomIndex(delayDistribution, setup.randomFloat);
+  const delayRandomIndex = randomIndex(delayDistribution, randomFloat());
   setup.delayName = delays[delayRandomIndex].name;
   setup.delayProbability = delays[delayRandomIndex].probability;
   setup.delay = delays[delayRandomIndex].delay;
@@ -113,7 +113,7 @@ const generateSetup = () => {
     { show: false, probability: 0.75 },
   ];
   const shadowDistribution = createDistribution(shadows);
-  const shadowRandomIndex = randomIndex(shadowDistribution, setup.randomFloat);
+  const shadowRandomIndex = randomIndex(shadowDistribution, randomFloat());
   setup.shadow = shadows[shadowRandomIndex].show;
   setup.shadowProbability = shadows[shadowRandomIndex].probability;
 
@@ -124,7 +124,7 @@ const generateSetup = () => {
     { name: "Square", probability: 0.6 },
   ];
   const shapeDistribution = createDistribution(shapes);
-  const shapeRandomIndex = randomIndex(shapeDistribution, setup.randomFloat);
+  const shapeRandomIndex = randomIndex(shapeDistribution, randomFloat());
   setup.shape = shapes[shapeRandomIndex].name;
   setup.shapeProbability = shapes[shapeRandomIndex].probability;
 
