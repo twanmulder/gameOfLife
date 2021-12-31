@@ -133,10 +133,11 @@ class Cell {
     // Make random cells alive
     const seed = xmur3(`${setup.randomFloat}${this.gridY}${this.gridX}`);
     const randomFloat = mulberry32(seed());
-    this.alive = randomFloat() > 0.5;
+    this.randomFloat = randomFloat();
+    this.alive = this.randomFloat > 0.5;
 
     // Set alive color
-    this.aliveColor = setup.cellAliveColor[~~(randomFloat() * setup.cellAliveColor.length)];
+    this.aliveColor = setup.cellAliveColor[~~(this.randomFloat * setup.cellAliveColor.length)];
   }
 
   draw() {
@@ -146,8 +147,9 @@ class Cell {
       this.context.shadowBlur = setup.cellSize;
     }
 
-    // Set fill color of cell
+    // Set fill & stroke color of the cell
     this.context.fillStyle = this.alive ? this.aliveColor : setup.cellDeadColor;
+    this.context.strokeStyle = this.alive ? this.aliveColor : setup.cellDeadColor;
 
     // Draw shape depending on setup
     if (setup.shape === "overlapping-circle") {
@@ -159,7 +161,11 @@ class Cell {
         0,
         2 * Math.PI
       );
-      this.context.fill();
+      if (this.randomFloat > 0.5) {
+        this.context.stroke();
+      } else {
+        this.context.fill();
+      }
     } else if (setup.shape === "circle") {
       this.context.beginPath();
       this.context.arc(
