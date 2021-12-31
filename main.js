@@ -9,6 +9,7 @@ if (params.has("seed")) {
 const initSetup = {
   seedInput: initSeed.toString(),
   gridSize: 400,
+  canvasOffset: 100,
 };
 
 const generateSetup = () => {
@@ -146,8 +147,8 @@ class Cell {
     if (setup.shape === "overlapping-circle") {
       this.context.beginPath();
       this.context.arc(
-        this.gridX * Cell.width + Cell.width / 2,
-        this.gridY * Cell.height + Cell.height / 2,
+        this.gridX * Cell.width + setup.canvasOffset + Cell.width / 2,
+        this.gridY * Cell.height + setup.canvasOffset + Cell.height / 2,
         Cell.width / 1.5,
         0,
         2 * Math.PI
@@ -156,8 +157,8 @@ class Cell {
     } else if (setup.shape === "circle") {
       this.context.beginPath();
       this.context.arc(
-        this.gridX * Cell.width + Cell.width / 2,
-        this.gridY * Cell.height + Cell.height / 2,
+        this.gridX * Cell.width + setup.canvasOffset + Cell.width / 2,
+        this.gridY * Cell.height + setup.canvasOffset + Cell.height / 2,
         Cell.width / 2,
         0,
         2 * Math.PI,
@@ -165,7 +166,12 @@ class Cell {
       );
       this.context.fill();
     } else if (setup.shape === "square") {
-      this.context.fillRect(this.gridX * Cell.width, this.gridY * Cell.height, Cell.width, Cell.height);
+      this.context.fillRect(
+        this.gridX * Cell.width + setup.canvasOffset,
+        this.gridY * Cell.height + setup.canvasOffset,
+        Cell.width,
+        Cell.height
+      );
     }
   }
 }
