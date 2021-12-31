@@ -8,7 +8,7 @@ if (params.has("seed")) {
 
 const initSetup = {
   seedInput: initSeed.toString(),
-  canvasSize: 400,
+  gridSize: 400,
 };
 
 const generateSetup = () => {
@@ -142,6 +142,7 @@ class Cell {
     // Set fill color of cell
     this.context.fillStyle = this.alive ? this.aliveColor : setup.cellDeadColor;
 
+    // Draw shape depending on setup
     if (setup.shape === "overlapping-circle") {
       this.context.beginPath();
       this.context.arc(
@@ -170,8 +171,8 @@ class Cell {
 }
 
 class GameWorld {
-  static numColumns = setup.canvasSize / setup.cellSize;
-  static numRows = setup.canvasSize / setup.cellSize;
+  static numColumns = setup.gridSize / setup.cellSize;
+  static numRows = setup.gridSize / setup.cellSize;
 
   constructor(canvasId) {
     this.canvas = document.getElementById(canvasId);
