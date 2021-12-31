@@ -35,7 +35,7 @@
 
       section {
         box-sizing: border-box;
-        width: 400px;
+        width: 450px;
         height: 600px;
         padding: 2rem 2rem 2rem 3rem;
         border-radius: 0 1rem 1rem 0;
@@ -55,6 +55,7 @@
       input[type="text"]:focus {
         outline: none;
         background-color: #fff;
+        border-color: #15b2e5;
       }
 
       input[type="button"] {
@@ -72,14 +73,49 @@
         border-color: #eee;
         cursor: pointer;
       }
+
+      h1 {
+        text-transform: uppercase;
+      }
+
+      .traits {
+        margin-top: 1.5rem;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+      }
+
+      .trait {
+        padding: 0.75rem;
+        border-radius: 0.25rem;
+        background-color: #eff8fd;
+        border: 1px solid #15b2e5;
+      }
+
+      .trait-name {
+        color: #15b2e5;
+        font-size: 11px;
+        font-weight: 500;
+        text-transform: uppercase;
+      }
+      .trait-value {
+        color: rgb(53, 56, 64);
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 30px;
+      }
+      .trait-probability {
+        color: rgb(112, 122, 131);
+        font-size: 13px;
+        line-height: 16px;
+      }
     </style>
 
     <canvas id="canvas" width="600" height="600"> Your browser does not support the HTML5 canvas tag. </canvas>
     <section>
+      <h1>Traits</h1>
       <p>Seed: <input type="text" name="seed input" id="seed" /><input type="button" value="random" id="random" /></p>
-      <pre>
-      <code id="setup">
-      </code>
+      <div class="traits" id="traits"></div>
     </pre>
     </section>
 

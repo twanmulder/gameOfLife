@@ -25,16 +25,17 @@ const generateSetup = () => {
 
   // get random size
   const sizes = [
-    { name: "sm", cellSize: 10, probability: 0.25 },
-    { name: "md", cellSize: 20, probability: 0.25 },
-    { name: "lg", cellSize: 25, probability: 0.25 },
-    { name: "xl", cellSize: 40, probability: 0.25 },
+    { name: "Small", cellSize: 10, probability: 0.25 },
+    { name: "Medium", cellSize: 20, probability: 0.25 },
+    { name: "Large", cellSize: 25, probability: 0.25 },
+    { name: "Extra Large", cellSize: 40, probability: 0.25 },
   ];
   const sizeWeights = [0.5, 0.25, 0.125, 0.125];
   const sizeDistribution = createDistribution(sizes, sizeWeights, 10);
   const sizeRandomIndex = randomIndex(sizeDistribution, setup.randomFloat);
   setup.sizeName = sizes[sizeRandomIndex].name;
   setup.cellSize = sizes[sizeRandomIndex].cellSize;
+  setup.sizeProbability = sizes[sizeRandomIndex].probability;
 
   // get random color palette
   const palettes = [
@@ -84,18 +85,20 @@ const generateSetup = () => {
   const paletteDistribution = createDistribution(palettes);
   const paletteRandomIndex = randomIndex(paletteDistribution, setup.randomFloat);
   setup.paletteName = palettes[paletteRandomIndex].name;
+  setup.paletteProbability = palettes[paletteRandomIndex].probability;
   setup.cellAliveColor = palettes[paletteRandomIndex].cellAliveColor;
   setup.cellDeadColor = palettes[paletteRandomIndex].cellDeadColor;
 
   // get random delay
   const delays = [
-    { name: "slow", delay: 100, probability: 0.3 },
-    { name: "medium", delay: 75, probability: 0.3 },
-    { name: "fast", delay: 50, probability: 0.3 },
+    { name: "Slow", delay: 100, probability: 0.33 },
+    { name: "Medium", delay: 75, probability: 0.33 },
+    { name: "Fast", delay: 50, probability: 0.33 },
   ];
   const delayDistribution = createDistribution(delays);
   const delayRandomIndex = randomIndex(delayDistribution, setup.randomFloat);
   setup.delayName = delays[delayRandomIndex].name;
+  setup.delayProbability = delays[delayRandomIndex].probability;
   setup.delay = delays[delayRandomIndex].delay;
 
   // get if rectangles should have a shadow or not
@@ -106,23 +109,65 @@ const generateSetup = () => {
   const shadowDistribution = createDistribution(shadows);
   const shadowRandomIndex = randomIndex(shadowDistribution, setup.randomFloat);
   setup.shadow = shadows[shadowRandomIndex].show;
+  setup.shadowProbability = shadows[shadowRandomIndex].probability;
 
   // get if it should be circles or squares
   const shapes = [
-    { name: "circle", probability: 0.25 },
-    { name: "overlapping-circle", probability: 0.25 },
-    { name: "square", probability: 0.5 },
+    { name: "Circle", probability: 0.25 },
+    { name: "Overlapping Circles", probability: 0.25 },
+    { name: "Square", probability: 0.5 },
   ];
   const shapeDistribution = createDistribution(shapes);
   const shapeRandomIndex = randomIndex(shapeDistribution, setup.randomFloat);
   setup.shape = shapes[shapeRandomIndex].name;
+  setup.shapeProbability = shapes[shapeRandomIndex].probability;
 
   return setup;
 };
 
 const setup = generateSetup();
 document.getElementById("seed").value = setup.seedInput;
-document.getElementById("setup").innerHTML = JSON.stringify(setup, null, 4);
+
+// Add traits to DOM
+const container = document.getElementById("traits");
+const traits = [
+  {
+    name: "size",
+    value: setup.sizeName,
+    probability: setup.sizeProbability,
+  },
+  {
+    name: "palette",
+    value: setup.paletteName,
+    probability: setup.paletteProbability,
+  },
+  {
+    name: "delay",
+    value: setup.delayName,
+    probability: setup.delayProbability,
+  },
+  {
+    name: "shadow",
+    value: setup.shadow,
+    probability: setup.shadowProbability,
+  },
+  {
+    name: "shape",
+    value: setup.shape,
+    probability: setup.shapeProbability,
+  },
+];
+
+traits.forEach((trait) => {
+  const traitElement = document.createElement("div");
+  traitElement.classList.add("trait");
+  traitElement.innerHTML = `
+    <div class="trait-name">${trait.name}</div>
+    <div class="trait-value">${trait.value}</div>
+    <div class="trait-probability">${trait.probability * 100}% have this trait</div>
+  `;
+  container.appendChild(traitElement);
+});
 
 // add handler for random button
 document.getElementById("random").onclick = () => {
@@ -162,7 +207,7 @@ class Cell {
     this.context.strokeStyle = this.alive ? this.aliveColor : setup.cellDeadColor;
 
     // Draw shape depending on setup
-    if (setup.shape === "overlapping-circle") {
+    if (setup.shape === "Overlapping Circles") {
       this.context.beginPath();
       this.context.arc(
         this.gridX * Cell.width + setup.canvasOffset + Cell.width / 2,
@@ -176,7 +221,7 @@ class Cell {
       } else {
         this.context.fill();
       }
-    } else if (setup.shape === "circle") {
+    } else if (setup.shape === "Circle") {
       this.context.beginPath();
       this.context.arc(
         this.gridX * Cell.width + setup.canvasOffset + Cell.width / 2,
@@ -187,7 +232,7 @@ class Cell {
         false
       );
       this.context.fill();
-    } else if (setup.shape === "square") {
+    } else if (setup.shape === "Square") {
       this.context.fillRect(
         this.gridX * Cell.width + setup.canvasOffset,
         this.gridY * Cell.height + setup.canvasOffset,
