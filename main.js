@@ -67,9 +67,14 @@ const generateSetup = () => {
       cellAliveColor: ["#fec600", "#74bfb8", "#3ca5d9", "#2364aa"],
       cellDeadColor: "#ea7316",
     },
+    {
+      name: "White Mandy",
+      cellAliveColor: ["#ee7e92", "#5dd8db", "#fb9a87", "#fbede6"],
+      cellDeadColor: "#ffffff",
+    },
   ];
-  const paletteWeights = [0.2, 0.2, 0.2, 0.2, 0.2, 0.2];
-  const paletteDistribution = createDistribution(palettes, paletteWeights, 12);
+  const paletteWeights = [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2];
+  const paletteDistribution = createDistribution(palettes, paletteWeights, 14);
   const paletteRandomIndex = randomIndex(paletteDistribution, randomFloat());
   setup.paletteName = palettes[paletteRandomIndex].name;
   setup.cellAliveColor = palettes[paletteRandomIndex].cellAliveColor;
@@ -86,6 +91,20 @@ const generateSetup = () => {
   const delayRandomIndex = randomIndex(delayDistribution, randomFloat());
   setup.delayName = delays[delayRandomIndex].name;
   setup.delay = delays[delayRandomIndex].delay;
+
+  // get if rectangles should have a shadow or not
+  const shadows = [false, true];
+  const shadowWeights = [0.75, 0.25];
+  const shadowDistribution = createDistribution(shadows, shadowWeights, 10);
+  const shadowRandomIndex = randomIndex(shadowDistribution, randomFloat());
+  setup.shadow = shadows[shadowRandomIndex];
+
+  // get if it should be circles or squares
+  const shapes = ["circle", "overlapping-circle", "square"];
+  const shapeWeights = [0.25, 0.25, 0.5];
+  const shapeDistribution = createDistribution(shapes, shapeWeights, 10);
+  const shapeRandomIndex = randomIndex(shapeDistribution, randomFloat());
+  setup.shape = shapes[shapeRandomIndex];
 
   return setup;
 };
@@ -114,9 +133,39 @@ class Cell {
   }
 
   draw() {
-    // Draw a simple square
+    // Show if shadow if its in setup
+    if (setup.shadow) {
+      this.context.shadowColor = this.aliveColor;
+      this.context.shadowBlur = setup.cellSize;
+    }
+
+    // Set fill color of cell
     this.context.fillStyle = this.alive ? this.aliveColor : setup.cellDeadColor;
-    this.context.fillRect(this.gridX * Cell.width, this.gridY * Cell.height, Cell.width, Cell.height);
+
+    if (setup.shape === "overlapping-circle") {
+      this.context.beginPath();
+      this.context.arc(
+        this.gridX * Cell.width + Cell.width / 2,
+        this.gridY * Cell.height + Cell.height / 2,
+        Cell.width / 1.5,
+        0,
+        2 * Math.PI
+      );
+      this.context.fill();
+    } else if (setup.shape === "circle") {
+      this.context.beginPath();
+      this.context.arc(
+        this.gridX * Cell.width + Cell.width / 2,
+        this.gridY * Cell.height + Cell.height / 2,
+        Cell.width / 2,
+        0,
+        2 * Math.PI,
+        false
+      );
+      this.context.fill();
+    } else if (setup.shape === "square") {
+      this.context.fillRect(this.gridX * Cell.width, this.gridY * Cell.height, Cell.width, Cell.height);
+    }
   }
 }
 
