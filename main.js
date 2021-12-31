@@ -1,6 +1,6 @@
 import { xmur3, mulberry32, createDistribution, randomIndex } from "./util.js";
 
-let initSeed = Math.floor(Math.random() * 100);
+let initSeed = Math.floor(Math.random() * 1000);
 const params = new URLSearchParams(window.location.search);
 if (params.has("seed")) {
   initSeed = params.get("seed");
