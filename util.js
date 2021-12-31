@@ -17,11 +17,17 @@ export function mulberry32(a) {
   };
 }
 
-export function createDistribution(array, weights, size) {
+export function createDistribution(array) {
   const distribution = [];
-  const sum = weights.reduce((a, b) => a + b);
+
+  let sum = 0;
+  array.forEach((element) => {
+    sum += element.probability;
+  });
+  const size = sum * 10;
+
   for (let i = 0; i < array.length; ++i) {
-    const count = (weights[i] / sum) * size;
+    const count = (array[i].probability / sum) * size;
     for (let j = 0; j < count; ++j) {
       distribution.push(i);
     }

@@ -25,10 +25,10 @@ const generateSetup = () => {
 
   // get random size
   const sizes = [
-    { name: "sm", cellSize: 10 },
-    { name: "md", cellSize: 20 },
-    { name: "lg", cellSize: 25 },
-    { name: "xl", cellSize: 40 },
+    { name: "sm", cellSize: 10, probability: 0.25 },
+    { name: "md", cellSize: 20, probability: 0.25 },
+    { name: "lg", cellSize: 25, probability: 0.25 },
+    { name: "xl", cellSize: 40, probability: 0.25 },
   ];
   const sizeWeights = [0.5, 0.25, 0.125, 0.125];
   const sizeDistribution = createDistribution(sizes, sizeWeights, 10);
@@ -42,40 +42,46 @@ const generateSetup = () => {
       name: "Flashy",
       cellAliveColor: ["#01f5d4", "#f15bb5", "#00bbf9", "#fee440"],
       cellDeadColor: "#9b5de5",
+      probability: 0.2,
     },
     {
       name: "Bubble Gum",
       cellAliveColor: ["#ffb400", "#f6511d", "#00a6ed", "#0d2c53"],
       cellDeadColor: "#dc77d2",
+      probability: 0.2,
     },
     {
       name: "Greytones",
       cellAliveColor: ["#111", "#222", "#444", "#666", "#888", "#aaa", "#ccc", "#eee"],
       cellDeadColor: "#FEFEFE",
+      probability: 0.2,
     },
     {
       name: "Lava",
       cellAliveColor: ["#d62827", "#f77f00", "#fcbf48", "#ebe2b7"],
       cellDeadColor: "#003049",
+      probability: 0.2,
     },
     {
       name: "Mystic Violet",
       cellAliveColor: ["#03052e", "#22017c", "#0d00a4"],
       cellDeadColor: "#02010a",
+      probability: 0.2,
     },
     {
       name: "Tango Matisse",
       cellAliveColor: ["#fec600", "#74bfb8", "#3ca5d9", "#2364aa"],
       cellDeadColor: "#ea7316",
+      probability: 0.2,
     },
     {
       name: "White Mandy",
       cellAliveColor: ["#ee7e92", "#5dd8db", "#fb9a87", "#fbede6"],
       cellDeadColor: "#ffffff",
+      probability: 0.2,
     },
   ];
-  const paletteWeights = [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2];
-  const paletteDistribution = createDistribution(palettes, paletteWeights, 14);
+  const paletteDistribution = createDistribution(palettes);
   const paletteRandomIndex = randomIndex(paletteDistribution, setup.randomFloat);
   setup.paletteName = palettes[paletteRandomIndex].name;
   setup.cellAliveColor = palettes[paletteRandomIndex].cellAliveColor;
@@ -83,29 +89,33 @@ const generateSetup = () => {
 
   // get random delay
   const delays = [
-    { name: "slow", delay: 100 },
-    { name: "medium", delay: 75 },
-    { name: "fast", delay: 50 },
+    { name: "slow", delay: 100, probability: 0.3 },
+    { name: "medium", delay: 75, probability: 0.3 },
+    { name: "fast", delay: 50, probability: 0.3 },
   ];
-  const delayWeights = [0.333, 0.333, 0.333];
-  const delayDistribution = createDistribution(delays, delayWeights, 10);
+  const delayDistribution = createDistribution(delays);
   const delayRandomIndex = randomIndex(delayDistribution, setup.randomFloat);
   setup.delayName = delays[delayRandomIndex].name;
   setup.delay = delays[delayRandomIndex].delay;
 
   // get if rectangles should have a shadow or not
-  const shadows = [false, true];
-  const shadowWeights = [0.75, 0.25];
-  const shadowDistribution = createDistribution(shadows, shadowWeights, 10);
+  const shadows = [
+    { show: true, probability: 0.25 },
+    { show: false, probability: 0.75 },
+  ];
+  const shadowDistribution = createDistribution(shadows);
   const shadowRandomIndex = randomIndex(shadowDistribution, setup.randomFloat);
-  setup.shadow = shadows[shadowRandomIndex];
+  setup.shadow = shadows[shadowRandomIndex].show;
 
   // get if it should be circles or squares
-  const shapes = ["circle", "overlapping-circle", "square"];
-  const shapeWeights = [0.25, 0.25, 0.5];
-  const shapeDistribution = createDistribution(shapes, shapeWeights, 10);
+  const shapes = [
+    { name: "circle", probability: 0.25 },
+    { name: "overlapping-circle", probability: 0.25 },
+    { name: "square", probability: 0.5 },
+  ];
+  const shapeDistribution = createDistribution(shapes);
   const shapeRandomIndex = randomIndex(shapeDistribution, setup.randomFloat);
-  setup.shape = shapes[shapeRandomIndex];
+  setup.shape = shapes[shapeRandomIndex].name;
 
   return setup;
 };
