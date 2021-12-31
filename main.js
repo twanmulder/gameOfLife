@@ -25,10 +25,10 @@ const generateSetup = () => {
 
   // get random size
   const sizes = [
-    { name: "Small", cellSize: 10, probability: 0.25 },
-    { name: "Medium", cellSize: 20, probability: 0.25 },
-    { name: "Large", cellSize: 25, probability: 0.25 },
-    { name: "Extra Large", cellSize: 40, probability: 0.25 },
+    { name: "Small", cellSize: 10, probability: 0.125 },
+    { name: "Medium", cellSize: 20, probability: 0.125 },
+    { name: "Large", cellSize: 25, probability: 0.3 },
+    { name: "Extra Large", cellSize: 40, probability: 0.4 },
   ];
   const sizeDistribution = createDistribution(sizes);
   const sizeRandomIndex = randomIndex(sizeDistribution, setup.randomFloat);
@@ -90,9 +90,10 @@ const generateSetup = () => {
 
   // get random delay
   const delays = [
-    { name: "Slow", delay: 100, probability: 0.33 },
-    { name: "Medium", delay: 75, probability: 0.33 },
-    { name: "Fast", delay: 50, probability: 0.33 },
+    { name: "Slow", delay: 100, probability: 0.2 },
+    { name: "Medium", delay: 75, probability: 0.3 },
+    { name: "Fast", delay: 50, probability: 0.4 },
+    { name: "Turbo", delay: 30, probability: 0.1 },
   ];
   const delayDistribution = createDistribution(delays);
   const delayRandomIndex = randomIndex(delayDistribution, setup.randomFloat);
@@ -112,9 +113,9 @@ const generateSetup = () => {
 
   // get if it should be circles or squares
   const shapes = [
-    { name: "Circle", probability: 0.25 },
-    { name: "Overlapping Circles", probability: 0.25 },
-    { name: "Square", probability: 0.5 },
+    { name: "Circle", probability: 0.2 },
+    { name: "Overlapping Circles", probability: 0.1 },
+    { name: "Square", probability: 0.6 },
   ];
   const shapeDistribution = createDistribution(shapes);
   const shapeRandomIndex = randomIndex(shapeDistribution, setup.randomFloat);
@@ -141,7 +142,7 @@ const traits = [
     probability: setup.paletteProbability,
   },
   {
-    name: "delay",
+    name: "speed",
     value: setup.delayName,
     probability: setup.delayProbability,
   },
