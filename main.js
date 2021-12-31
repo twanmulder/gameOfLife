@@ -30,8 +30,7 @@ const generateSetup = () => {
     { name: "Large", cellSize: 25, probability: 0.25 },
     { name: "Extra Large", cellSize: 40, probability: 0.25 },
   ];
-  const sizeWeights = [0.5, 0.25, 0.125, 0.125];
-  const sizeDistribution = createDistribution(sizes, sizeWeights, 10);
+  const sizeDistribution = createDistribution(sizes);
   const sizeRandomIndex = randomIndex(sizeDistribution, setup.randomFloat);
   setup.sizeName = sizes[sizeRandomIndex].name;
   setup.cellSize = sizes[sizeRandomIndex].cellSize;
