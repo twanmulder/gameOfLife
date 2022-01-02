@@ -48,36 +48,66 @@
         margin-top: 0;
       }
 
+      .seed-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
       input[type="text"] {
+        box-sizing: border-box;
         background-color: #eee;
         appearance: none;
         border: 2px solid #eee;
-        border-radius: 0.25rem 0 0 0.25rem;
-        padding: 0.25rem 0.5rem;
+        border-radius: 0.5rem;
+        width: 12rem;
+        height: 2.5rem;
+        padding: 0 1rem;
         font-size: 1rem;
       }
 
       input[type="text"]:focus {
         outline: none;
         background-color: #fff;
-        border-color: #15b2e5;
+        border-color: rgb(30 64 175);
       }
 
-      input[type="button"] {
-        appearance: none;
-        border-radius: 0 0.25rem 0.25rem 0;
-        border: 2px solid #ddd;
-        background-color: #ddd;
-        color: #111;
+      .button {
+        border-radius: 0.5rem;
+        border: none;
+        width: 2.5rem;
+        height: 2.5rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
         font-size: 1rem;
-        padding: 0.25rem 0.5rem;
+        font-weight: 400;
       }
 
-      input[type="button"]:hover {
-        background-color: #eff8fd;
-        border-color: #eff8fd;
+      .button:hover {
         cursor: pointer;
-        color: #15b2e5;
+      }
+
+      .button svg {
+        fill: currentColor;
+      }
+
+      .generate-button {
+        width: 6rem;
+        background-color: #eee;
+      }
+
+      .generate-button:hover {
+        background-color: #ccc;
+      }
+
+      .random-button {
+        background-color: rgb(30 64 175);
+        color: #fff;
+      }
+
+      .random-button:hover {
+        background-color: rgb(29 78 216);
       }
 
       .palette-subtitle {
@@ -145,6 +175,7 @@
         font-weight: 500;
         line-height: 30px;
       }
+
       .trait-probability {
         color: rgb(112, 122, 131);
         font-size: 13px;
@@ -155,7 +186,29 @@
     <canvas id="canvas" width="600" height="600"> Your browser does not support the HTML5 canvas tag. </canvas>
     <section>
       <h2 class="seed-title">Seed</h2>
-      <p>Seed: <input type="text" name="seed input" id="seed" /><input type="button" value="random" id="random" /></p>
+      <div class="seed-wrapper">
+        <input type="text" name="seed input" id="seed" />
+        <button class="button generate-button" id="generate">Generate</button>
+        <button class="button random-button" id="random">
+          <svg
+            width="18"
+            height="18"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            viewBox="0 0 122.88 105.71"
+            xml:space="preserve"
+          >
+            <g>
+              <path
+                style="fill-rule: evenodd; clip-rule: evenodd"
+                class="st0"
+                d="M0,79.45c-0.02-1.95,0.76-3.06,2.51-3.18h14.08c5.98,0,8.89,0.16,13.98-3.91c1.08-0.86,2.1-1.86,3.06-3 c4.55-5.41,6.17-11.96,7.87-18.9C44.79,37,50.03,22.78,63.98,17.15c7.94-3.2,18.82-2.59,27.41-2.59h5.27l0.01-10.05 c0-5.01,1.18-5.88,4.79-2.45l19.55,18.58c2.36,2.24,2.03,3.7-0.22,5.86L101.49,45c-3.37,3.41-4.89,2.45-4.82-2.26v-11.8 c-34-0.52-32.57,1.67-42.05,34.09c-3.5,10.04-8.81,17.08-15.59,21.69c-7.09,4.82-13.68,6.39-22.02,6.39H6.65 C0.71,93.11,0,92.83,0,86.75V79.45L0,79.45z M0.23,26.26c-0.02,1.95,0.76,3.06,2.51,3.18h14.7c5.98,0,8.89-0.16,13.98,3.91 c1.08,0.86,2.1,1.86,3.06,3c1.16,1.38,2.13,2.84,2.96,4.35c1.5-4.69,3.36-9.29,5.82-13.5c0.7-1.19,1.44-2.35,2.23-3.48 c-1.74-1.8-3.61-3.37-5.61-4.73c-7.09-4.82-13.68-6.39-22.02-6.39H6.88c-5.94,0-6.65,0.28-6.65,6.36V26.26L0.23,26.26z M53.57,80.45c2.96,3.42,6.63,6.24,11.27,8.11c7.94,3.2,18.21,2.59,26.8,2.59h5.27l0.01,10.05c0,5.01,1.18,5.88,4.79,2.45 l19.55-18.58c2.36-2.24,2.03-3.7-0.22-5.86l-19.3-18.5c-3.37-3.41-4.89-2.45-4.82,2.26v11.8c-24.78,0.38-30.42-0.69-35.32-13.84 c-0.27,0.94-0.64,2.23-1.93,6.65c-0.03,0.1-0.06,0.19-0.09,0.28l0,0C57.91,72.62,55.9,76.79,53.57,80.45L53.57,80.45z"
+              ></path>
+            </g>
+          </svg>
+        </button>
+      </div>
       <h3 class="palette-subtitle">Color Palette</h3>
       <h2 class="palette-name" id="palette-name"></h2>
       <div class="palette" id="palette"></div>
