@@ -25,10 +25,10 @@ const generateSetup = () => {
 
   // get random size
   const sizes = [
-    { name: "Small", cellSize: 10, probability: 0.125 },
-    { name: "Medium", cellSize: 20, probability: 0.125 },
-    { name: "Large", cellSize: 25, probability: 0.3 },
-    { name: "Extra Large", cellSize: 40, probability: 0.4 },
+    { name: "Small", cellSize: setup.gridSize / 40, probability: 0.125 },
+    { name: "Medium", cellSize: setup.gridSize / 20, probability: 0.125 },
+    { name: "Large", cellSize: setup.gridSize / 16, probability: 0.3 },
+    { name: "Extra Large", cellSize: setup.gridSize / 10, probability: 0.4 },
   ];
   const sizeDistribution = createDistribution(sizes);
   const sizeRandomIndex = randomIndex(sizeDistribution, randomFloat());
@@ -363,6 +363,10 @@ class GameWorld {
     // Clear the screen
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+    // Add background color
+    this.context.fillStyle = setup.cellDeadColor;
+    this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
     // Draw all the gameobjects
     for (let i = 0; i < this.gameObjects.length; i++) {
       this.gameObjects[i].draw();
@@ -378,4 +382,15 @@ class GameWorld {
 window.onload = () => {
   // The page has loaded, start the game
   let gameWorld = new GameWorld("canvas");
+
+  // Save current state of canvas to png png on device
+  // setTimeout(() => {
+  //   const img = gameWorld.canvas.toDataURL("image/png");
+  //   const a = document.createElement("a");
+  //   a.href = img;
+  //   a.download = "image.png";
+  //   document.body.appendChild(a);
+  //   a.click();
+  //   a.remove();
+  // }, 100);
 };
