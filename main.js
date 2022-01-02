@@ -191,10 +191,22 @@ palette.append(...paletteColors);
 const paletteName = document.getElementById("palette-name");
 paletteName.innerHTML = setup.paletteName + `<span>(${setup.paletteProbability * 100}% have this palette)</span>`;
 
-// add handlet for generate button
-document.getElementById("generate").onclick = () => {
+// Handle user entering seed
+function generateNewSeedPage() {
   const seed = document.getElementById("seed").value;
   window.location.href = window.location.href.split("?")[0] + `?seed=${seed}`;
+}
+
+// add handler for generate button
+document.getElementById("generate").onclick = () => {
+  generateNewSeedPage();
+};
+
+// add handler when user presses enter
+document.getElementById("seed").onkeyup = (e) => {
+  if (e.keyCode === 13 || e.key === "Enter") {
+    generateNewSeedPage();
+  }
 };
 
 // add handler for random button
