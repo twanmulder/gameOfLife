@@ -143,11 +143,6 @@ const traits = [
     probability: setup.sizeProbability,
   },
   {
-    name: "palette",
-    value: setup.paletteName,
-    probability: setup.paletteProbability,
-  },
-  {
     name: "speed",
     value: setup.delayName,
     probability: setup.delayProbability,
@@ -174,6 +169,27 @@ traits.forEach((trait) => {
   `;
   container.appendChild(traitElement);
 });
+
+// Add color palette to DOM
+const palette = document.getElementById("palette");
+
+const paletteColors = setup.cellAliveColor.map((color) => {
+  const div = document.createElement("div");
+  div.classList.add("color");
+  div.style.backgroundColor = color;
+  return div;
+});
+
+const deadColorDiv = document.createElement("div");
+deadColorDiv.classList.add("color");
+deadColorDiv.style.backgroundColor = setup.cellDeadColor;
+paletteColors.unshift(deadColorDiv);
+
+palette.append(...paletteColors);
+
+// Add color palette name to DOM
+const paletteName = document.getElementById("palette-name");
+paletteName.innerHTML = setup.paletteName + `<span>(${setup.paletteProbability * 100}% have this palette)</span>`;
 
 // add handler for random button
 document.getElementById("random").onclick = () => {

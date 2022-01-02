@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Game of Life Random NFT</title>
     <meta name="description" content="Game of Life Random NFT" />
     <meta name="author" content="Twan" />
@@ -36,12 +36,16 @@
 
       section {
         box-sizing: border-box;
-        width: 450px;
+        width: 500px;
         height: 600px;
         padding: 2rem 2rem 2rem 3rem;
         border-radius: 0 1rem 1rem 0;
         border: 1px solid #ccc;
         margin-left: -1rem;
+      }
+
+      .seed-title {
+        margin-top: 0;
       }
 
       input[type="text"] {
@@ -76,8 +80,42 @@
         color: #15b2e5;
       }
 
-      h1 {
+      .palette-subtitle {
+        color: rgb(112, 122, 131);
+        font-size: 0.75rem;
         text-transform: uppercase;
+        margin-top: 2.5rem;
+        margin-bottom: 0;
+        font-weight: 500;
+      }
+
+      .palette-name {
+        margin-bottom: 0;
+        margin-top: 0.5rem;
+      }
+
+      .palette-name span {
+        color: rgb(112, 122, 131);
+        font-size: 0.75rem;
+        margin-left: 0.5rem;
+        font-weight: 500;
+      }
+
+      .palette {
+        margin-top: 1rem;
+        display: flex;
+        gap: 1rem;
+      }
+
+      .color {
+        width: 2rem;
+        height: 2rem;
+        border-radius: 0.25rem;
+      }
+
+      .traits-title {
+        margin-bottom: 0;
+        margin-top: 2.5rem;
       }
 
       .traits {
@@ -100,6 +138,7 @@
         font-weight: 500;
         text-transform: uppercase;
       }
+
       .trait-value {
         color: rgb(53, 56, 64);
         font-size: 15px;
@@ -115,10 +154,13 @@
 
     <canvas id="canvas" width="600" height="600"> Your browser does not support the HTML5 canvas tag. </canvas>
     <section>
-      <h1>Traits</h1>
+      <h2 class="seed-title">Seed</h2>
       <p>Seed: <input type="text" name="seed input" id="seed" /><input type="button" value="random" id="random" /></p>
+      <h3 class="palette-subtitle">Color Palette</h3>
+      <h2 class="palette-name" id="palette-name"></h2>
+      <div class="palette" id="palette"></div>
+      <h2 class="traits-title">Traits</h2>
       <div class="traits" id="traits"></div>
-    </pre>
     </section>
 
     <script type="module" src="./main.js"></script>
