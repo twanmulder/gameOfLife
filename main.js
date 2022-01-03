@@ -1,5 +1,5 @@
 import { xmur3, mulberry32, createDistribution, randomIndex } from "./util.js";
-import { PulsingEye, Octagon } from "./shapes.js";
+import { PulsingEye, Octagon, Flower } from "./shapes.js";
 
 let initSeed = Math.floor(Math.random() * 1000);
 const params = new URLSearchParams(window.location.search);
@@ -151,7 +151,7 @@ const generateSetup = () => {
     setup.shapeProbability = shapes[2].probability;
   }
 
-  // Special render for Tall Oscillator
+  // Special render for Octagon
   if (setup.seedInput === "Octagon") {
     setup.sizeName = sizes[3].name;
     setup.cellSize = sizes[3].cellSize;
@@ -161,6 +161,28 @@ const generateSetup = () => {
     setup.paletteProbability = palettes[4].probability;
     setup.cellAliveColor = palettes[4].cellAliveColor;
     setup.cellDeadColor = palettes[4].cellDeadColor;
+
+    setup.delayName = delays[2].name;
+    setup.delayProbability = delays[2].probability;
+    setup.delay = delays[2].delay;
+
+    setup.shadow = shadows[1].show;
+    setup.shadowProbability = shadows[1].probability;
+
+    setup.shape = shapes[0].name;
+    setup.shapeProbability = shapes[0].probability;
+  }
+
+  // Special render for Flower
+  if (setup.seedInput === "Flower") {
+    setup.sizeName = sizes[1].name;
+    setup.cellSize = sizes[1].cellSize;
+    setup.sizeProbability = sizes[1].probability;
+
+    setup.paletteName = "Flower";
+    setup.paletteProbability = 0.001;
+    setup.cellAliveColor = ["#ffdef8", "#ebccff", "#a2c1fa", "#fbffd1"];
+    setup.cellDeadColor = "#defce1";
 
     setup.delayName = delays[2].name;
     setup.delayProbability = delays[2].probability;
@@ -291,6 +313,10 @@ class Cell {
     if (setup.seedInput === "Octagon") {
       this.alive = Octagon[this.gridY][this.gridX] > 0.5;
       this.aliveColor = setup.cellAliveColor[2];
+    }
+
+    if (setup.seedInput === "Flower") {
+      this.alive = Flower[this.gridY][this.gridX] > 0.5;
     }
   }
 
