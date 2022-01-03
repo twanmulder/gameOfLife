@@ -4,7 +4,14 @@ import { PulsingEye, Octagon, Flower } from "./shapes.js";
 let initSeed = Math.floor(Math.random() * 1000);
 const params = new URLSearchParams(window.location.search);
 if (params.has("seed")) {
-  initSeed = params.get("seed");
+  let paramsSeed = params.get("seed");
+
+  if (paramsSeed.includes("-")) {
+    paramsSeed = paramsSeed.replaceAll("-", " ");
+    window.location.href = window.location.href.split("?")[0] + `?seed=${paramsSeed}`;
+  }
+
+  initSeed = paramsSeed;
 }
 
 const initSetup = {
