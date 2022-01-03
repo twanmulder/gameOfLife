@@ -191,6 +191,10 @@ palette.append(...paletteColors);
 const paletteName = document.getElementById("palette-name");
 paletteName.innerHTML = setup.paletteName + `<span>(${setup.paletteProbability * 100}% have this palette)</span>`;
 
+// add href to opensea seed in new tab
+const openseaLink = document.getElementById("opensea-link");
+openseaLink.href = `https://opensea.io/collection/game-of-life-ntfs?search[query]=${setup.seedInput}`;
+
 // Handle user entering seed
 function generateNewSeedPage() {
   const seed = document.getElementById("seed").value;
