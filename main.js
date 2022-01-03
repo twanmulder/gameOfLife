@@ -385,12 +385,17 @@ window.onload = () => {
 
   // Save current state of canvas to png png on device
   // setTimeout(() => {
-  //   const img = gameWorld.canvas.toDataURL("image/png");
-  //   const a = document.createElement("a");
-  //   a.href = img;
-  //   a.download = "image.png";
-  //   document.body.appendChild(a);
-  //   a.click();
-  //   a.remove();
+  // const img = gameWorld.canvas.toDataURL("image/png");
+  // const a = document.createElement("a");
+  // a.href = img;
+  // a.download = `game-of-life-#${setup.seedInput}.png`;
+  // document.body.appendChild(a);
+  // a.click();
+  // a.remove();
+
+  // setTimeout(() => {
+  //   const nextSeed = parseInt(setup.seedInput) + 1;
+  //   window.location.href = window.location.href.split("?")[0] + `?seed=${nextSeed}`;
+  // }, 1000);
   // }, 100);
 };
