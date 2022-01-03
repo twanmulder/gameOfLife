@@ -1,4 +1,5 @@
 import { xmur3, mulberry32, createDistribution, randomIndex } from "./util.js";
+import { PulsingEye } from "./shapes.js";
 
 let initSeed = Math.floor(Math.random() * 1000);
 const params = new URLSearchParams(window.location.search);
@@ -128,6 +129,28 @@ const generateSetup = () => {
   setup.shape = shapes[shapeRandomIndex].name;
   setup.shapeProbability = shapes[shapeRandomIndex].probability;
 
+  // Special render for pattern 101
+  if (setup.seedInput === "Pulsing Eye") {
+    setup.sizeName = sizes[1].name;
+    setup.cellSize = sizes[1].cellSize;
+    setup.sizeProbability = sizes[1].probability;
+
+    setup.paletteName = palettes[7].name;
+    setup.paletteProbability = palettes[7].probability;
+    setup.cellAliveColor = palettes[7].cellAliveColor;
+    setup.cellDeadColor = palettes[7].cellDeadColor;
+
+    setup.delayName = delays[1].name;
+    setup.delayProbability = delays[1].probability;
+    setup.delay = delays[1].delay;
+
+    setup.shadow = shadows[1].show;
+    setup.shadowProbability = shadows[0].probability;
+
+    setup.shape = shapes[2].name;
+    setup.shapeProbability = shapes[2].probability;
+  }
+
   return setup;
 };
 
@@ -237,6 +260,11 @@ class Cell {
 
     // Set alive color
     this.aliveColor = setup.cellAliveColor[~~(this.randomFloat * setup.cellAliveColor.length)];
+
+    // Special pattern 101
+    if (setup.seedInput === "Pulsing Eye") {
+      this.alive = PulsingEye[this.gridY][this.gridX] > 0.5;
+    }
   }
 
   draw() {
@@ -388,18 +416,18 @@ window.onload = () => {
   let gameWorld = new GameWorld("canvas");
 
   // Save current state of canvas to png png on device
-  // setTimeout(() => {
-  // const img = gameWorld.canvas.toDataURL("image/png");
-  // const a = document.createElement("a");
-  // a.href = img;
-  // a.download = `game-of-life-#${setup.seedInput}.png`;
-  // document.body.appendChild(a);
-  // a.click();
-  // a.remove();
+  setTimeout(() => {
+    const img = gameWorld.canvas.toDataURL("image/png");
+    const a = document.createElement("a");
+    a.href = img;
+    a.download = `game-of-life-#${setup.seedInput}.png`;
+    document.body.appendChild(a);
+    // a.click();
+    a.remove();
 
-  // setTimeout(() => {
-  //   const nextSeed = parseInt(setup.seedInput) + 1;
-  //   window.location.href = window.location.href.split("?")[0] + `?seed=${nextSeed}`;
-  // }, 1000);
-  // }, 100);
+    // setTimeout(() => {
+    //   const nextSeed = parseInt(setup.seedInput) + 1;
+    //   window.location.href = window.location.href.split("?")[0] + `?seed=${nextSeed}`;
+    // }, 1000);
+  }, 100);
 };
