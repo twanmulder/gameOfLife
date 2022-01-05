@@ -1,5 +1,5 @@
 import { xmur3, mulberry32, createDistribution, randomIndex } from "./util.js";
-import { PulsingEye, Octagon, Flower } from "./shapes.js";
+import { PulsingEye, Octagon, Flower, Mahjong } from "./shapes.js";
 
 let initSeed = Math.floor(Math.random() * 1000);
 const params = new URLSearchParams(window.location.search);
@@ -202,6 +202,28 @@ const generateSetup = () => {
     setup.shapeProbability = shapes[0].probability;
   }
 
+  // Special render for Flower
+  if (setup.seedInput === "Mahjong") {
+    setup.sizeName = sizes[1].name;
+    setup.cellSize = sizes[1].cellSize;
+    setup.sizeProbability = sizes[1].probability;
+
+    setup.paletteName = "Mahjong";
+    setup.paletteProbability = 0.001;
+    setup.cellAliveColor = ["#5f8e40", "#f2fbde"];
+    setup.cellDeadColor = "#036843";
+
+    setup.delayName = delays[0].name;
+    setup.delayProbability = delays[0].probability;
+    setup.delay = delays[0].delay;
+
+    setup.shadow = shadows[1].show;
+    setup.shadowProbability = shadows[1].probability;
+
+    setup.shape = shapes[0].name;
+    setup.shapeProbability = shapes[0].probability;
+  }
+
   return setup;
 };
 
@@ -324,6 +346,10 @@ class Cell {
 
     if (setup.seedInput === "Flower") {
       this.alive = Flower[this.gridY][this.gridX] > 0.5;
+    }
+
+    if (setup.seedInput === "Mahjong") {
+      this.alive = Mahjong[this.gridY][this.gridX] > 0.5;
     }
   }
 
