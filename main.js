@@ -289,7 +289,7 @@ paletteName.innerHTML = setup.paletteName + `<span>(${setup.paletteProbability *
 
 // add href to opensea seed in new tab
 const openseaLink = document.getElementById("opensea-link");
-openseaLink.href = `https://opensea.io/collection/game-of-life-ntfs?search[query]=${setup.seedInput}`;
+openseaLink.href = `https://opensea.io/collection/game-of-life-nfts?search[query]=${setup.seedInput}`;
 
 // Handle user entering seed
 function generateNewSeedPage() {
