@@ -11,6 +11,8 @@ A super simple website generating a "Game of Life" based on a provided seed
 
 ## Formatting of NFT Name
 
+The regular seeds are formatted as:
+
 Game of Life #"SEED"
 
 Examples:
@@ -18,3 +20,8 @@ Examples:
 - Game of Life #17571
 - Game of Life #CALLUM
 - Game of LIfe #kenneth.eth
+
+However, there are some "secret" patterns.
+These are formatted as:
+
+Game of Life - PATTERNNAME
