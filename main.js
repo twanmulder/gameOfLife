@@ -21,7 +21,7 @@ if (params.has("seed")) {
 
 const initSetup = {
   seedInput: initSeed.toString(),
-  gridSize: 800,
+  gridSize: 400,
   canvasOffset: 100,
 };
 
@@ -498,7 +498,7 @@ class GameWorld {
     // The loop function has reached it's end, keep requesting new frames
     setTimeout(() => {
       window.requestAnimationFrame(() => this.gameLoop());
-    }, 10000000);
+    }, setup.delay);
   }
 }
 
@@ -513,7 +513,7 @@ window.onload = () => {
     a.href = img;
     a.download = `game-of-life-#${setup.seedInput}.png`;
     document.body.appendChild(a);
-    a.click();
+    // a.click();
     a.remove();
 
     // setTimeout(() => {
