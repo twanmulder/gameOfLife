@@ -11,12 +11,17 @@ if (params.has("seed")) {
     window.location.href = window.location.href.split("?")[0] + `?seed=${paramsSeed}`;
   }
 
+  if (paramsSeed.includes("_AT_")) {
+    paramsSeed = paramsSeed.replaceAll("_AT_", "@");
+    window.location.href = window.location.href.split("?")[0] + `?seed=${paramsSeed}`;
+  }
+
   initSeed = paramsSeed;
 }
 
 const initSetup = {
   seedInput: initSeed.toString(),
-  gridSize: 400,
+  gridSize: 800,
   canvasOffset: 100,
 };
 
@@ -493,7 +498,7 @@ class GameWorld {
     // The loop function has reached it's end, keep requesting new frames
     setTimeout(() => {
       window.requestAnimationFrame(() => this.gameLoop());
-    }, setup.delay);
+    }, 10000000);
   }
 }
 
@@ -508,7 +513,7 @@ window.onload = () => {
     a.href = img;
     a.download = `game-of-life-#${setup.seedInput}.png`;
     document.body.appendChild(a);
-    // a.click();
+    a.click();
     a.remove();
 
     // setTimeout(() => {
